@@ -33,7 +33,7 @@ def text_extract(filename):
     except SDKError as e:
         return f"Error: {e}"
     
-with gr.Blocks() as demo:
+with gr.Blocks(title="EZ Text Extractor") as demo:
     gr.Markdown("# Extract text from a document!")
     with gr.Row():
         file = gr.File(label="Upload a file",
@@ -45,14 +45,9 @@ with gr.Blocks() as demo:
     
     run.click(text_extract, file, outputs=text)
 
-demo.launch(share=False, server_name="0.0.0.0", show_api=False)
 
-
-
-
-
-    
-
-
+username = os.getenv("user")
+password = os.getenv("password")
+demo.launch(share=False, server_name="0.0.0.0", show_api=False, auth=(username, password))
 
 # %%
