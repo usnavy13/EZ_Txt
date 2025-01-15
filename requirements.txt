@@ -1,6 +1,4 @@
 python-dotenv
 gradio
-unstructured-client
-langchain 
-langchain-community 
-azure-ai-documentintelligence
+markitdown
+tiktoken
