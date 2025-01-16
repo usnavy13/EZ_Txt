@@ -17,6 +17,17 @@ A simple web application to extract text from various document formats using Mar
 pip install -r requirements.txt
 ```
 
+## Docker
+
+You can run EZ_Txt using the pre-built Docker container:
+
+```bash
+docker pull ghcr.io/usnavy13/ez-txt:latest
+docker run -p 7860:7860 ghcr.io/usnavy13/ez-txt:latest
+```
+
+Then access the application at `http://localhost:7860`
+
 ## Configuration
 
 Create a `.env` file in the root directory with the following optional settings:
