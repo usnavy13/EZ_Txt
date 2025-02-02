@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Copy the Python script to the working directory
 COPY main.py .
+COPY azure_document_intelligence.py .
 
 # Install any dependencies if required
 # For example, if you have a requirements.txt file:

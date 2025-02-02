@@ -8,6 +8,14 @@ from azure_document_intelligence import extract_markdown_from_file
 
 load_dotenv()
 
+# Check for Azure environment variables and set extraction methods accordingly
+azure_endpoint = os.getenv("AZURE_ENDPOINT")
+azure_api_key = os.getenv("AZURE_API_KEY")
+if azure_endpoint and azure_api_key:
+    extraction_methods = ["MarkItDown", "Azure Document Intelligence"]
+else:
+    extraction_methods = ["MarkItDown"]
+
 # Initialize MarkItDown
 markitdown = MarkItDown()
 
@@ -36,7 +44,7 @@ with gr.Blocks(title="EZ Text Extractor") as demo:
                                 '.png', '.jpg', '.jpeg', '.html', 
                                 '.txt', '.csv', '.json', '.xml', '.zip'])
     with gr.Row():
-        method = gr.Radio(choices=["MarkItDown", "Azure Document Intelligence"], label="Extraction Method", value="MarkItDown")
+        method = gr.Radio(choices=extraction_methods, label="Extraction Method", value="MarkItDown")
     with gr.Row():
         run = gr.Button(value="Extract text")
     with gr.Row():

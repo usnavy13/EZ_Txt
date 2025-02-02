@@ -41,6 +41,17 @@ password=your_password
 show_api=false
 ```
 
+### Azure Document Intelligence Integration
+
+To use Azure Document Intelligence for text extraction, ensure you have an active Azure subscription and a Document Intelligence resource. Then, add the following entries to your `.env` file:
+
+```env
+AZURE_ENDPOINT=https://<your-azure-endpoint>
+AZURE_API_KEY=<your-azure-api-key>
+```
+
+The application will automatically enable the "Azure Document Intelligence" extraction method when both variables are present. Make sure the environment variable names match those expected by the code.
+
 ## Usage
 
 1. Run the application:
