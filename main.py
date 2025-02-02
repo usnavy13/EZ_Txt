@@ -4,17 +4,21 @@ import os
 import gradio as gr
 from markitdown import MarkItDown
 import tiktoken
+from azure_document_intelligence import extract_markdown_from_file
 
 load_dotenv()
 
 # Initialize MarkItDown
 markitdown = MarkItDown()
 
-def extract_text(file_path):
-    """Extract text from a document using MarkItDown and count tokens"""
+def extract_text(file_path, method):
+    """Extract text from a document using the selected method and count tokens"""
     try:
-        result = markitdown.convert(file_path)
-        text = result.text_content
+        if method == "Azure Document Intelligence":
+            text = extract_markdown_from_file(file_path)
+        else:
+            result = markitdown.convert(file_path)
+            text = result.text_content
         
         # Count tokens using tiktoken
         encoding = tiktoken.get_encoding("cl100k_base")  # Using OpenAI's encoding
@@ -31,6 +35,9 @@ with gr.Blocks(title="EZ Text Extractor") as demo:
                       file_types=['.pdf', '.pptx', '.docx', '.xlsx', 
                                 '.png', '.jpg', '.jpeg', '.html', 
                                 '.txt', '.csv', '.json', '.xml', '.zip'])
+    with gr.Row():
+        method = gr.Radio(choices=["MarkItDown", "Azure Document Intelligence"], label="Extraction Method", value="MarkItDown")
+    with gr.Row():
         run = gr.Button(value="Extract text")
     with gr.Row():
         token_count = gr.Textbox(label="Token Count",
@@ -40,7 +47,7 @@ with gr.Blocks(title="EZ Text Extractor") as demo:
                          show_copy_button=True)
 
     
-    run.click(extract_text, file, outputs=[text, token_count])
+    run.click(extract_text, inputs=[file, method], outputs=[text, token_count])
 
 # Optional settings from environment variables
 username = os.getenv("user")
